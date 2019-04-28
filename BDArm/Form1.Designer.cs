@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.MainMonthCalendar = new System.Windows.Forms.MonthCalendar();
             this.MainChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.MainGridView = new System.Windows.Forms.DataGridView();
@@ -41,6 +41,8 @@
             this.MainTabControl = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.PCodeButton = new System.Windows.Forms.Button();
+            this.ViewMakerButton = new System.Windows.Forms.Button();
             this.UserGridView = new System.Windows.Forms.DataGridView();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.PromoGridView = new System.Windows.Forms.DataGridView();
@@ -68,16 +70,16 @@
             // 
             // MainChart
             // 
-            chartArea1.Name = "ChartArea1";
-            this.MainChart.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.MainChart.Legends.Add(legend1);
+            chartArea3.Name = "ChartArea1";
+            this.MainChart.ChartAreas.Add(chartArea3);
+            legend3.Name = "Legend1";
+            this.MainChart.Legends.Add(legend3);
             this.MainChart.Location = new System.Drawing.Point(6, 6);
             this.MainChart.Name = "MainChart";
-            series1.ChartArea = "ChartArea1";
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.MainChart.Series.Add(series1);
+            series3.ChartArea = "ChartArea1";
+            series3.Legend = "Legend1";
+            series3.Name = "Series1";
+            this.MainChart.Series.Add(series3);
             this.MainChart.Size = new System.Drawing.Size(358, 134);
             this.MainChart.TabIndex = 1;
             this.MainChart.Text = "chart1";
@@ -151,6 +153,8 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.PCodeButton);
+            this.tabPage2.Controls.Add(this.ViewMakerButton);
             this.tabPage2.Controls.Add(this.UserGridView);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
@@ -160,13 +164,33 @@
             this.tabPage2.Text = "Пользователи";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // PCodeButton
+            // 
+            this.PCodeButton.Location = new System.Drawing.Point(140, 440);
+            this.PCodeButton.Name = "PCodeButton";
+            this.PCodeButton.Size = new System.Drawing.Size(116, 33);
+            this.PCodeButton.TabIndex = 2;
+            this.PCodeButton.Text = "Производители";
+            this.PCodeButton.UseVisualStyleBackColor = true;
+            this.PCodeButton.Click += new System.EventHandler(this.PCodeButton_Click);
+            // 
+            // ViewMakerButton
+            // 
+            this.ViewMakerButton.Location = new System.Drawing.Point(18, 440);
+            this.ViewMakerButton.Name = "ViewMakerButton";
+            this.ViewMakerButton.Size = new System.Drawing.Size(116, 33);
+            this.ViewMakerButton.TabIndex = 1;
+            this.ViewMakerButton.Text = "Производители";
+            this.ViewMakerButton.UseVisualStyleBackColor = true;
+            this.ViewMakerButton.Click += new System.EventHandler(this.ViewMakerButton_Click);
+            // 
             // UserGridView
             // 
             this.UserGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.UserGridView.Location = new System.Drawing.Point(0, 0);
             this.UserGridView.Name = "UserGridView";
             this.UserGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.UserGridView.Size = new System.Drawing.Size(586, 494);
+            this.UserGridView.Size = new System.Drawing.Size(586, 424);
             this.UserGridView.TabIndex = 0;
             // 
             // tabPage3
@@ -295,6 +319,8 @@
         private System.Windows.Forms.DataGridView UserGridView;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.DataGridView PromoGridView;
+        private System.Windows.Forms.Button ViewMakerButton;
+        private System.Windows.Forms.Button PCodeButton;
     }
 }
 

@@ -39,7 +39,7 @@
             this.CompleteButton.Name = "CompleteButton";
             this.CompleteButton.Size = new System.Drawing.Size(141, 41);
             this.CompleteButton.TabIndex = 3;
-            this.CompleteButton.Text = "Приминить";
+            this.CompleteButton.Text = "Применить";
             this.CompleteButton.UseVisualStyleBackColor = true;
             this.CompleteButton.Click += new System.EventHandler(this.CompleteButton_Click);
             // 

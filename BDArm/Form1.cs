@@ -69,12 +69,12 @@ namespace BDArm
             AddButton.Visible = true;
             DelButton.Visible = true;
 
-            string mainStr = "select * from maker";
+            /*string mainStr = "select * from maker";
             GridUpdate(0,mainStr);
             mainStr = "select id,login,isadmin from users";
             GridUpdate(1,mainStr);
             mainStr = "select id,code from promo";
-            GridUpdate(2, mainStr);
+            GridUpdate(2, mainStr)*/
         }
 
         //Пресет для выхода из основной формы
@@ -90,7 +90,7 @@ namespace BDArm
         }
 
         //Обновление для grid
-        public void GridUpdate(int GridMode,string command)
+        /*public void GridUpdate(int GridMode,string command)
         {
             var grid = new DataGridView();
             //Какой grid обновить
@@ -124,7 +124,7 @@ namespace BDArm
                     MessageBox.Show(ex.Message);
                 }
             }
-        }
+        }*/
 
         //Удалить
         public string command = "",DBCommand= "";
@@ -164,7 +164,7 @@ namespace BDArm
                     sqlCommand.ExecuteNonQuery();
                     conn.Close();
                 }
-                GridUpdate(selector,command);
+                //GridUpdate(selector,command);
             }
         }
 
@@ -203,12 +203,26 @@ namespace BDArm
 
                 if (AddForm.ShowDialog() == DialogResult.OK)
                 {
-                    GridUpdate(selector, command);
+                    //GridUpdate(selector, command);
                 }
             }
         }
 
         public string str;
+        //Загрузка производителей
+        private void ViewMakerButton_Click(object sender, EventArgs e)
+        {
+            Context context = new Context(new ShowMaker());
+            context.VisionLogic(UserGridView);
+        }
+
+        //Загрузка производителей
+        private void PCodeButton_Click(object sender, EventArgs e)
+        {
+            Context context = new Context(new ShowPCode());
+            context.VisionLogic(UserGridView);
+        }
+
         //Изменить
         private void ChangeButton_Click(object sender, EventArgs e)
         {
@@ -228,7 +242,7 @@ namespace BDArm
                     selector = 1;
                     break;
                 case 2:
-                    grid = UserGridView;
+                    grid = PromoGridView;
                     DBCommand = @"delete from promo where code = @currentName";
                     command = "select * from code";
                     selector = 2;
@@ -254,7 +268,7 @@ namespace BDArm
 
             if (editForm.ShowDialog() == DialogResult.OK)
             {
-                GridUpdate(selector,command);
+                //GridUpdate(selector,command);
             }
         }
     }
