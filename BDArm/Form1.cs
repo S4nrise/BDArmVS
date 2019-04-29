@@ -10,11 +10,19 @@ using System.Windows.Forms;
 using BDArm.Classes;
 using BDArm.Properties;
 using Npgsql;
+using BDArm.InerfaceContent;
 
 namespace BDArm
 {
     public partial class MainForm : Form
     {
+        public enum GridType
+        {
+            Maker,
+            Promo
+        };
+        GridType gridType;
+
         //Настройка подключкения через settings файл
         public static string ConnString = new NpgsqlConnectionStringBuilder()
         {
@@ -69,6 +77,7 @@ namespace BDArm
             AddButton.Visible = true;
             DelButton.Visible = true;
 
+            GridUpdate();
             /*string mainStr = "select * from maker";
             GridUpdate(0,mainStr);
             mainStr = "select id,login,isadmin from users";
@@ -90,33 +99,22 @@ namespace BDArm
         }
 
         //Обновление для grid
-        /*public void GridUpdate(int GridMode,string command)
-        {
-            var grid = new DataGridView();
-            //Какой grid обновить
-            switch (GridMode)
-            {
-                case 0: grid = MainGridView;
-                    break;
-                case 1: grid = UserGridView;
-                    break;
-                case 2: grid = PromoGridView;
-                    break;
-            }
+        public void GridUpdate()
+        {           
             var sqlCommand = new NpgsqlCommand { };
 
             using (NpgsqlConnection conn = new NpgsqlConnection(ConnString))
             {
                 DataSet dataSet;
                 NpgsqlDataAdapter dataAdapter;
-                //string command = "select * from maker";
+                string command = "select * from maker";
                 try
                 {
                     dataSet = new DataSet();
                     dataAdapter = new NpgsqlDataAdapter();
                     dataAdapter.SelectCommand = new NpgsqlCommand(command, conn);
                     dataAdapter.Fill(dataSet);                  
-                    grid.DataSource = dataSet.Tables[0];
+                    MainGridView.DataSource = dataSet.Tables[0];
                     conn.Close();
                 }
                 catch (Exception ex)
@@ -124,7 +122,7 @@ namespace BDArm
                     MessageBox.Show(ex.Message);
                 }
             }
-        }*/
+        }
 
         //Удалить
         public string command = "",DBCommand= "";
@@ -132,23 +130,26 @@ namespace BDArm
         private void DelButton_Click(object sender, EventArgs e)
         {
             var grid = new DataGridView();
-            //command - Команда для GridUpdate какая таблица загрузится
-            //selector - Какой грид обновить 
             //DBCommand - в какой таблице что удалить
-            switch (MainTabControl.SelectedIndex)
+            if (gridType == GridType.Maker)
             {
-                case 0: grid = MainGridView;
-                    DBCommand = @"delete from maker where name = @currentName";
-                    command = "select * from maker";
-                    selector = 0;
-                    break;
-                case 1: grid = UserGridView;
-                    DBCommand = @"delete from users where login = @currentName";
-                    command = "select id,login,isadmin from users";
-                    selector = 1;
-                    break;
+                DBCommand = @"delete from maker where name = @currentName";
+                Del(DBCommand);
+                ShowMaker();
             }
-            if (grid.SelectedRows.Count != 0)
+            else if (gridType == GridType.Promo)
+            {
+                grid = UserGridView;
+                DBCommand = @"delete from promo where code = @currentName";
+                Del(DBCommand);
+                ShowPCode();
+            }
+        }
+        
+        //Метод удаления
+        public void Del(string DBCommand)
+        {
+            if (UserGridView.SelectedRows.Count != 0)
             {
                 using (NpgsqlConnection conn = new NpgsqlConnection(ConnString))
                 {
@@ -159,116 +160,81 @@ namespace BDArm
                         Connection = conn,
                         CommandText = DBCommand
                     };
-                    MessageBox.Show(grid.SelectedCells[1].ToString());
-                    sqlCommand.Parameters.AddWithValue("@currentName", grid.SelectedCells[1].Value);
+                    //MessageBox.Show(UserGridView.SelectedCells[1].ToString());
+                    sqlCommand.Parameters.AddWithValue("@currentName", UserGridView.SelectedCells[1].Value);
                     sqlCommand.ExecuteNonQuery();
                     conn.Close();
                 }
-                //GridUpdate(selector,command);
             }
         }
 
         //Добавить
         private void AddButton_Click(object sender, EventArgs e)
         {
-            var grid = new DataGridView();
-            if (MainTabControl.SelectedIndex == 1)
+            //MessageBox.Show(MainTabControl.SelectedIndex.ToString());
+            if(MainTabControl.SelectedIndex==1)
             {
-                return;
-            }
-            else
-            { 
-                switch (MainTabControl.SelectedIndex)
+                if (gridType==GridType.Maker)
                 {
-                    case 0:
-                        grid = MainGridView;
-                        DBCommand = @"delete from maker where name = @currentName";
-                        command = "select * from maker";
-                        selector = 0;
-                        break;
-                    case 1:
-                        grid = UserGridView;
-                        DBCommand = @"delete from users where login = @currentName";
-                        command = "select * from users";
-                        selector = 1;
-                        break;
-                    case 2:
-                        grid = UserGridView;
-                        DBCommand = @"delete from promo where code = @currentName";
-                        command = "select * from code";
-                        selector = 2;
-                        break;
+                    AddForm addForm = new AddForm(AddForm.InsOrUpd.InsMaker, "");
+                    addForm.ShowDialog();
+                    ShowMaker();
                 }
-                var AddForm = new AddForm(MainTabControl.SelectedIndex);
-
-                if (AddForm.ShowDialog() == DialogResult.OK)
+                else if (gridType == GridType.Promo)
                 {
-                    //GridUpdate(selector, command);
+                    AddForm addForm = new AddForm(AddForm.InsOrUpd.InsPromo, "");
+                    addForm.ShowDialog();
+                    ShowPCode();
                 }
             }
         }
 
         public string str;
-        //Загрузка производителей
+        //Загрузка производителей по кнопке
         private void ViewMakerButton_Click(object sender, EventArgs e)
         {
+            ShowMaker();
+        }
+
+        //Метод загрузки производителей 
+        public void ShowMaker()
+        {
+            gridType = GridType.Maker;
             Context context = new Context(new ShowMaker());
             context.VisionLogic(UserGridView);
         }
 
-        //Загрузка производителей
-        private void PCodeButton_Click(object sender, EventArgs e)
+        //Метод загрузки промокодов
+        public void ShowPCode()
         {
+            gridType = GridType.Promo;
             Context context = new Context(new ShowPCode());
             context.VisionLogic(UserGridView);
+        }
+
+        //Загрузка промокодов по кнопке
+        private void PCodeButton_Click(object sender, EventArgs e)
+        {
+            ShowPCode();
         }
 
         //Изменить
         private void ChangeButton_Click(object sender, EventArgs e)
         {
-            var grid = new DataGridView();
-            switch (MainTabControl.SelectedIndex)
+            if (MainTabControl.SelectedIndex == 1)
             {
-                case 0:
-                    grid = MainGridView;
-                    DBCommand = @"delete from maker where name = @currentName";
-                    command = "select * from maker";
-                    selector = 0;
-                    break;
-                case 1:
-                    grid = UserGridView;
-                    DBCommand = @"delete from users where login = @currentName";
-                    command = "select * from users";
-                    selector = 1;
-                    break;
-                case 2:
-                    grid = PromoGridView;
-                    DBCommand = @"delete from promo where code = @currentName";
-                    command = "select * from code";
-                    selector = 2;
-                    break;
-            }
-            using (NpgsqlConnection conn = new NpgsqlConnection(ConnString))
-            {
-                conn.Open();
-                var sqlCommand = new NpgsqlCommand { };
-                sqlCommand = new NpgsqlCommand
+                if (gridType == GridType.Maker)
                 {
-                    Connection = conn,
-                    CommandText = DBCommand
-                };
-                MessageBox.Show(MainGridView.SelectedCells[1].ToString());
-                sqlCommand.Parameters.AddWithValue("@currentName", MainGridView.SelectedCells[1].Value);
-                str = (string)sqlCommand.ExecuteScalar();
-                sqlCommand.Dispose();
-                conn.Close();
-            }
-
-            var editForm = new AddEditFrom(MainTabControl.SelectedIndex,str);
-
-            if (editForm.ShowDialog() == DialogResult.OK)
-            {
-                //GridUpdate(selector,command);
+                    AddForm addForm = new AddForm(AddForm.InsOrUpd.UpdMaker, UserGridView.SelectedCells[1].Value.ToString());
+                    addForm.ShowDialog();
+                    ShowMaker();
+                }
+                else if (gridType == GridType.Promo)
+                {
+                    AddForm addForm = new AddForm(AddForm.InsOrUpd.UpdPromo, UserGridView.SelectedCells[1].Value.ToString());
+                    addForm.ShowDialog();
+                    ShowPCode();
+                }
             }
         }
     }

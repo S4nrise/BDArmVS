@@ -35,9 +35,9 @@
             // CompleteButton
             // 
             this.CompleteButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.CompleteButton.Location = new System.Drawing.Point(98, 81);
+            this.CompleteButton.Location = new System.Drawing.Point(12, 81);
             this.CompleteButton.Name = "CompleteButton";
-            this.CompleteButton.Size = new System.Drawing.Size(141, 41);
+            this.CompleteButton.Size = new System.Drawing.Size(315, 41);
             this.CompleteButton.TabIndex = 3;
             this.CompleteButton.Text = "Применить";
             this.CompleteButton.UseVisualStyleBackColor = true;

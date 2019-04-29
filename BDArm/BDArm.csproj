@@ -96,17 +96,20 @@
     </Compile>
     <Compile Include="Classes\ChekText.cs" />
     <Compile Include="Classes\ConnectionBD.cs" />
-    <Compile Include="Context.cs" />
+    <Compile Include="InerfaceContent\ChangeContent.cs" />
+    <Compile Include="InerfaceContent\InsertContext.cs" />
+    <Compile Include="InerfaceContent\InterfaceContentStrategy.cs" />
+    <Compile Include="InterfaceShow\Context.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="InterfaceGridViewStrategy.cs" />
+    <Compile Include="InterfaceShow\InterfaceGridViewStrategy.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ShowMaker.cs" />
+    <Compile Include="InterfaceShow\ShowMaker.cs" />
     <Compile Include="UserForm.cs">
       <SubType>Form</SubType>
     </Compile>

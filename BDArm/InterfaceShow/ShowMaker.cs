@@ -46,12 +46,6 @@ namespace BDArm
                 }
             }
         }
-
-        public void ShowPCode(DataGridView gridView)
-        {
-
-        }
-
     }
 
     class ShowPCode : InterfaceGridViewStrategy

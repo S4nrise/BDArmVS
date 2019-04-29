@@ -8,85 +8,70 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Npgsql;
+using BDArm.InerfaceContent;
 
 namespace BDArm
 {
     public partial class AddForm : Form
     {
-        public int mode;
-        public AddForm(int mode)
+        public enum InsOrUpd
+        {
+            InsMaker,
+            UpdMaker,
+            InsPromo,
+            UpdPromo
+        }
+
+        public InsOrUpd insOrUpd;
+        public string strOld="";
+        public AddForm(InsOrUpd insOrUpd,string str)
         {
             InitializeComponent();
-            this.mode = mode;
-        }
 
-        public string command = "", selector = "", DBCommand = "",AddDBCommand= "";
-        public void Add()
-        {
-            var grid = new DataGridView();
-            switch (mode)
+            if (insOrUpd == InsOrUpd.InsMaker)
             {
-                case 0:
-                    DBCommand = @"select count(*) from maker where name = @currentName";
-                    AddDBCommand = @"insert into maker values ((select max(id)+1 from maker), @newName)";
-                    command = "select * from maker";
-                    break;
-                case 1:
-                    DBCommand = @"select count(*) from user where login = @currentName";
-                    command = "select * from users";
-                    AddDBCommand = @"insert into user values ((select max(id)+1 from user), @newName)";
-                    break;
-                case 2:
-                    DBCommand = @"select count(*) from promo where code = @currentName";
-                    command = "select * from promo";
-                    AddDBCommand = @"insert into promo values ((select max(id)+1 from promo), @newName)";
-                    break;
+                CompleteButton.Text = "Добавить производителя";
+                this.insOrUpd = InsOrUpd.InsMaker;
             }
-
-            var sqlCommand = new NpgsqlCommand();
-            using (NpgsqlConnection conn = new NpgsqlConnection(MainForm.ConnString))
+            else if (insOrUpd == InsOrUpd.UpdMaker)
             {
-
-                //Проверка на уникльность наименования
-                sqlCommand = new NpgsqlCommand
-                {
-                    Connection = conn,
-                    CommandText = DBCommand
-                };
-                sqlCommand.Parameters.AddWithValue("@currentName", EditTextBox.Text);
-
-                conn.Open();
-                if ((long)sqlCommand.ExecuteScalar() != 0)
-                {
-                    MessageBox.Show("Такой производитель уже есть.");
-                }
-                else
-                {
-                    //Меняем имя
-                    sqlCommand = new NpgsqlCommand
-                    {
-                        Connection = conn,
-                        CommandText = AddDBCommand
-                    };
-                    sqlCommand.Parameters.AddWithValue("@newName", EditTextBox.Text);
-                }
-                try
-                {
-                    sqlCommand.ExecuteNonQuery();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                    MessageBox.Show(ex.StackTrace);
-                }
-                conn.Close();
+                CompleteButton.Text = "Изменить производителя";
+                this.insOrUpd = InsOrUpd.UpdMaker;
+                EditTextBox.Text = str;
+                strOld = str;
             }
-        }
+            else if (insOrUpd == InsOrUpd.InsPromo)
+            {
+                CompleteButton.Text = "Добавить промокод";
+                this.insOrUpd = InsOrUpd.InsPromo;
+            }
+            else if (insOrUpd == InsOrUpd.UpdPromo)
+            {
+                CompleteButton.Text = "Изменить промокод";
+                this.insOrUpd = InsOrUpd.UpdPromo;
+            }
+        }       
 
         private void CompleteButton_Click(object sender, EventArgs e)
         {
-            Add();
+            if (insOrUpd == InsOrUpd.InsMaker)
+            {
+                InsertContext insertContext = new InsertContext(new InsertContentMaker());
+                insertContext.VisionLogic(EditTextBox.Text);
+            }
+            else if (insOrUpd == InsOrUpd.InsPromo)
+            {
+                InsertContext insertContext = new InsertContext(new InsertPromo());
+                insertContext.VisionLogic(EditTextBox.Text);
+            }
+            else if (insOrUpd == InsOrUpd.UpdMaker)
+            {
+                UpdateContext updateContext = new UpdateContext(new UpdateContentMaker());
+                updateContext.VisionLogic(strOld, EditTextBox.Text);
+            }
+
             DialogResult = DialogResult.OK;
+            this.Close();
         }
     }
 }
