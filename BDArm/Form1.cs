@@ -193,6 +193,7 @@ namespace BDArm
         //Загрузка производителей по кнопке
         private void ViewMakerButton_Click(object sender, EventArgs e)
         {
+            tabPage2.Text = "Производители";
             ShowMaker();
         }
 
@@ -215,6 +216,7 @@ namespace BDArm
         //Загрузка промокодов по кнопке
         private void PCodeButton_Click(object sender, EventArgs e)
         {
+            tabPage2.Text = "Промокоды";
             ShowPCode();
         }
 

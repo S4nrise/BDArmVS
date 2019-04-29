@@ -48,7 +48,9 @@ namespace BDArm
             else if (insOrUpd == InsOrUpd.UpdPromo)
             {
                 CompleteButton.Text = "Изменить промокод";
+                EditTextBox.Text = str;
                 this.insOrUpd = InsOrUpd.UpdPromo;
+                strOld = str;
             }
         }       
 
@@ -67,6 +69,11 @@ namespace BDArm
             else if (insOrUpd == InsOrUpd.UpdMaker)
             {
                 UpdateContext updateContext = new UpdateContext(new UpdateContentMaker());
+                updateContext.VisionLogic(strOld, EditTextBox.Text);
+            }
+            else if (insOrUpd == InsOrUpd.UpdPromo)
+            {
+                UpdateContext updateContext = new UpdateContext(new UpdatePromoContent());
                 updateContext.VisionLogic(strOld, EditTextBox.Text);
             }
 

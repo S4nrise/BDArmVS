@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.MainMonthCalendar = new System.Windows.Forms.MonthCalendar();
             this.MainChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.MainGridView = new System.Windows.Forms.DataGridView();
@@ -44,8 +44,6 @@
             this.PCodeButton = new System.Windows.Forms.Button();
             this.ViewMakerButton = new System.Windows.Forms.Button();
             this.UserGridView = new System.Windows.Forms.DataGridView();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.PromoGridView = new System.Windows.Forms.DataGridView();
             this.ChekStatusLabel = new System.Windows.Forms.Label();
             this.TempLabel = new System.Windows.Forms.Label();
             this.DelButton = new System.Windows.Forms.Button();
@@ -58,8 +56,6 @@
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.UserGridView)).BeginInit();
-            this.tabPage3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.PromoGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // MainMonthCalendar
@@ -70,16 +66,16 @@
             // 
             // MainChart
             // 
-            chartArea2.Name = "ChartArea1";
-            this.MainChart.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.MainChart.Legends.Add(legend2);
+            chartArea1.Name = "ChartArea1";
+            this.MainChart.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.MainChart.Legends.Add(legend1);
             this.MainChart.Location = new System.Drawing.Point(6, 6);
             this.MainChart.Name = "MainChart";
-            series2.ChartArea = "ChartArea1";
-            series2.Legend = "Legend1";
-            series2.Name = "Series1";
-            this.MainChart.Series.Add(series2);
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.MainChart.Series.Add(series1);
             this.MainChart.Size = new System.Drawing.Size(358, 134);
             this.MainChart.TabIndex = 1;
             this.MainChart.Text = "chart1";
@@ -131,7 +127,6 @@
             // 
             this.MainTabControl.Controls.Add(this.tabPage1);
             this.MainTabControl.Controls.Add(this.tabPage2);
-            this.MainTabControl.Controls.Add(this.tabPage3);
             this.MainTabControl.Location = new System.Drawing.Point(194, 47);
             this.MainTabControl.Name = "MainTabControl";
             this.MainTabControl.SelectedIndex = 0;
@@ -161,7 +156,7 @@
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage2.Size = new System.Drawing.Size(586, 494);
             this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Пользователи";
+            this.tabPage2.Text = "Таблицы";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // PCodeButton
@@ -193,25 +188,6 @@
             this.UserGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.UserGridView.Size = new System.Drawing.Size(586, 424);
             this.UserGridView.TabIndex = 0;
-            // 
-            // tabPage3
-            // 
-            this.tabPage3.Controls.Add(this.PromoGridView);
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(586, 494);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "Промокоды";
-            this.tabPage3.UseVisualStyleBackColor = true;
-            // 
-            // PromoGridView
-            // 
-            this.PromoGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.PromoGridView.Location = new System.Drawing.Point(-4, 0);
-            this.PromoGridView.Name = "PromoGridView";
-            this.PromoGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.PromoGridView.Size = new System.Drawing.Size(590, 494);
-            this.PromoGridView.TabIndex = 0;
             // 
             // ChekStatusLabel
             // 
@@ -293,8 +269,6 @@
             this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.UserGridView)).EndInit();
-            this.tabPage3.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.PromoGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -318,8 +292,6 @@
         private System.Windows.Forms.Button AddButton;
         private System.Windows.Forms.Button ChangeButton;
         private System.Windows.Forms.DataGridView UserGridView;
-        private System.Windows.Forms.TabPage tabPage3;
-        private System.Windows.Forms.DataGridView PromoGridView;
         private System.Windows.Forms.Button ViewMakerButton;
         private System.Windows.Forms.Button PCodeButton;
     }

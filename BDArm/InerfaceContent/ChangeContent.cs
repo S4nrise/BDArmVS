@@ -136,4 +136,42 @@ namespace BDArm.InerfaceContent
             //throw new NotImplementedException();
         }
     }
+
+    class UpdatePromoContent : InterfaceUpdateContent
+    {
+        public void UpdateMakerContent(string strOld, string strNew)
+        {
+            var sqlCommand = new NpgsqlCommand();
+            using (NpgsqlConnection conn = new NpgsqlConnection(MainForm.ConnString))
+            {
+
+                //Проверка на уникльность наименования
+                sqlCommand = new NpgsqlCommand
+                {
+                    Connection = conn,
+                    CommandText = @"select count(*) from promo where code = @currentName"
+                };
+                sqlCommand.Parameters.AddWithValue("@currentName", strNew);
+
+                conn.Open();
+                if ((long)sqlCommand.ExecuteScalar() != 0)
+                {
+                    MessageBox.Show("Такой промокод уже есть.");
+                }
+                else
+                {
+                    //Меняем имя
+                    sqlCommand = new NpgsqlCommand
+                    {
+                        Connection = conn,
+                        CommandText = @"update promo set code = @newName where code = @currentName"
+                    };
+                    sqlCommand.Parameters.AddWithValue("@currentName", strOld);
+                    sqlCommand.Parameters.AddWithValue("@newName", strNew);
+                }
+                sqlCommand.ExecuteNonQuery();
+                conn.Close();
+            }
+        }
+    }
 }
