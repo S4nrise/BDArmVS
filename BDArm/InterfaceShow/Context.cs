@@ -17,7 +17,7 @@ namespace BDArm
         public Context() { }
         public Context(InterfaceGridViewStrategy gridViewStrategy)
         {
-            this.gridViewStrategy = gridViewStrategy;
+            SetStrategy(gridViewStrategy);
         }
         public void SetStrategy(InterfaceGridViewStrategy gridViewStrategy)
         {

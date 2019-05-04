@@ -10,7 +10,7 @@ namespace BDArm.InerfaceContent
 {
     class InsertContentMaker : InterfaceContentStrategy
     {
-        public void InsertContent(string str)
+        public void InsertContent(string str,string date)
         {
             var sqlCommand = new NpgsqlCommand();
             using (NpgsqlConnection conn = new NpgsqlConnection(MainForm.ConnString))
@@ -20,7 +20,7 @@ namespace BDArm.InerfaceContent
                 sqlCommand = new NpgsqlCommand
                 {
                     Connection = conn,
-                    CommandText = @"select count(*) from maker where name = @currentName"
+                    CommandText = @"select count(*) from maker where mname = @currentName"
                 };
                 sqlCommand.Parameters.AddWithValue("@currentName", str);
 
@@ -55,7 +55,7 @@ namespace BDArm.InerfaceContent
 
     class InsertPromo : InterfaceContentStrategy
     {
-        public void InsertContent(string str)
+        public void InsertContent(string str,string date)
         {
             var sqlCommand = new NpgsqlCommand();
             using (NpgsqlConnection conn = new NpgsqlConnection(MainForm.ConnString))
@@ -80,9 +80,10 @@ namespace BDArm.InerfaceContent
                     sqlCommand = new NpgsqlCommand
                     {
                         Connection = conn,
-                        CommandText = @"insert into promo values ((select max(id)+1 from promo), @newName)"
+                        CommandText = @"insert into promo values ((select max(id)+1 from promo), @newName,@newDate,0)"
                     };
                     sqlCommand.Parameters.AddWithValue("@newName", str);
+                    sqlCommand.Parameters.AddWithValue("@newDate", date);
                 }
                 try
                 {
@@ -100,7 +101,7 @@ namespace BDArm.InerfaceContent
 
     class UpdateContentMaker : InterfaceUpdateContent
     {
-        public void UpdateMakerContent(string strOld,string strNew)
+        public void UpdateMakerContent(string strOld,string strNew, string date)
         {
             var sqlCommand = new NpgsqlCommand();
             using (NpgsqlConnection conn = new NpgsqlConnection(MainForm.ConnString))
@@ -125,7 +126,7 @@ namespace BDArm.InerfaceContent
                     sqlCommand = new NpgsqlCommand
                     {
                         Connection = conn,
-                        CommandText = @"update maker set name = @newName where name = @currentName"
+                        CommandText = @"update maker set mname = @newName where name = @currentName"
                     };
                     sqlCommand.Parameters.AddWithValue("@currentName", strOld);
                     sqlCommand.Parameters.AddWithValue("@newName", strNew);
@@ -139,7 +140,7 @@ namespace BDArm.InerfaceContent
 
     class UpdatePromoContent : InterfaceUpdateContent
     {
-        public void UpdateMakerContent(string strOld, string strNew)
+        public void UpdateMakerContent(string strOld, string strNew, string date)
         {
             var sqlCommand = new NpgsqlCommand();
             using (NpgsqlConnection conn = new NpgsqlConnection(MainForm.ConnString))
@@ -156,18 +157,27 @@ namespace BDArm.InerfaceContent
                 conn.Open();
                 if ((long)sqlCommand.ExecuteScalar() != 0)
                 {
-                    MessageBox.Show("Такой промокод уже есть.");
-                }
-                else
-                {
-                    //Меняем имя
+                    //MessageBox.Show("Такой промокод уже есть.");
                     sqlCommand = new NpgsqlCommand
                     {
                         Connection = conn,
-                        CommandText = @"update promo set code = @newName where code = @currentName"
+                        CommandText = @"update promo set code = @newName, timelimit = @newDate where code = @currentName"
                     };
                     sqlCommand.Parameters.AddWithValue("@currentName", strOld);
                     sqlCommand.Parameters.AddWithValue("@newName", strNew);
+                    sqlCommand.Parameters.AddWithValue("@newDate", date);
+                }
+                else
+                {
+                    //Меняем промокод (код, срок действия, обнуляем статус)
+                    sqlCommand = new NpgsqlCommand
+                    {
+                        Connection = conn,
+                        CommandText = @"update promo set code = @newName, timelimit = @newDate, status = 0 where code = @currentName"
+                    };
+                    sqlCommand.Parameters.AddWithValue("@currentName", strOld);
+                    sqlCommand.Parameters.AddWithValue("@newName", strNew);
+                    sqlCommand.Parameters.AddWithValue("@newDate", date);
                 }
                 sqlCommand.ExecuteNonQuery();
                 conn.Close();

@@ -107,7 +107,12 @@ namespace BDArm
             {
                 DataSet dataSet;
                 NpgsqlDataAdapter dataAdapter;
-                string command = "select * from maker";
+                string command = @"select product.id as ""ID"",product.makerID as ""Производитель"",product.modelID as ""Модель"",
+                                    product.category as ""Категория"",product.sales as ""Колличество проданых едениц"",
+                                    product.price as ""Цена"",product.pcount as ""Всего едениц"" from product
+                                    join maker on maker.id = product.makerID
+                                    join model on model.id = product.modelID
+                                    join category on category.id = product.category";
                 try
                 {
                     dataSet = new DataSet();
@@ -176,13 +181,13 @@ namespace BDArm
             {
                 if (gridType==GridType.Maker)
                 {
-                    AddForm addForm = new AddForm(AddForm.InsOrUpd.InsMaker, "");
+                    AddForm addForm = new AddForm(AddForm.InsOrUpd.InsMaker, "", "");
                     addForm.ShowDialog();
                     ShowMaker();
                 }
                 else if (gridType == GridType.Promo)
                 {
-                    AddForm addForm = new AddForm(AddForm.InsOrUpd.InsPromo, "");
+                    AddForm addForm = new AddForm(AddForm.InsOrUpd.InsPromo, "", "");
                     addForm.ShowDialog();
                     ShowPCode();
                 }
@@ -225,15 +230,16 @@ namespace BDArm
         {
             if (MainTabControl.SelectedIndex == 1)
             {
+                //??Подуумать как заносить старую дату в календарь
                 if (gridType == GridType.Maker)
                 {
-                    AddForm addForm = new AddForm(AddForm.InsOrUpd.UpdMaker, UserGridView.SelectedCells[1].Value.ToString());
+                    AddForm addForm = new AddForm(AddForm.InsOrUpd.UpdMaker, UserGridView.SelectedCells[1].Value.ToString(),"");
                     addForm.ShowDialog();
                     ShowMaker();
                 }
                 else if (gridType == GridType.Promo)
                 {
-                    AddForm addForm = new AddForm(AddForm.InsOrUpd.UpdPromo, UserGridView.SelectedCells[1].Value.ToString());
+                    AddForm addForm = new AddForm(AddForm.InsOrUpd.UpdPromo, UserGridView.SelectedCells[1].Value.ToString(),"");
                     addForm.ShowDialog();
                     ShowPCode();
                 }

@@ -9,10 +9,10 @@ namespace BDArm.InerfaceContent
 {
     public interface InterfaceContentStrategy
     {
-        void InsertContent(string str);
+        void InsertContent(string str,string date);
     }
     public interface InterfaceUpdateContent
     {
-        void UpdateMakerContent(string strOld,string strNew);
+        void UpdateMakerContent(string strOld,string strNew, string date);
     }
 }

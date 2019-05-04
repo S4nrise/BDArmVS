@@ -76,12 +76,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AddEditFrom.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="AddEditFrom.Designer.cs">
-      <DependentUpon>AddEditFrom.cs</DependentUpon>
-    </Compile>
     <Compile Include="AddForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -116,9 +110,6 @@
     <Compile Include="UserForm.Designer.cs">
       <DependentUpon>UserForm.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="AddEditFrom.resx">
-      <DependentUpon>AddEditFrom.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="AddForm.resx">
       <DependentUpon>AddForm.cs</DependentUpon>
     </EmbeddedResource>

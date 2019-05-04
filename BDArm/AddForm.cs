@@ -24,7 +24,7 @@ namespace BDArm
 
         public InsOrUpd insOrUpd;
         public string strOld="";
-        public AddForm(InsOrUpd insOrUpd,string str)
+        public AddForm(InsOrUpd insOrUpd,string str, string date)
         {
             InitializeComponent();
 
@@ -32,6 +32,7 @@ namespace BDArm
             {
                 CompleteButton.Text = "Добавить производителя";
                 this.insOrUpd = InsOrUpd.InsMaker;
+                InsertDateTimePicker.Visible = false;
             }
             else if (insOrUpd == InsOrUpd.UpdMaker)
             {
@@ -39,11 +40,13 @@ namespace BDArm
                 this.insOrUpd = InsOrUpd.UpdMaker;
                 EditTextBox.Text = str;
                 strOld = str;
+                InsertDateTimePicker.Visible = false;
             }
             else if (insOrUpd == InsOrUpd.InsPromo)
             {
                 CompleteButton.Text = "Добавить промокод";
                 this.insOrUpd = InsOrUpd.InsPromo;
+                InsertDateTimePicker.Visible = true;
             }
             else if (insOrUpd == InsOrUpd.UpdPromo)
             {
@@ -51,6 +54,7 @@ namespace BDArm
                 EditTextBox.Text = str;
                 this.insOrUpd = InsOrUpd.UpdPromo;
                 strOld = str;
+                InsertDateTimePicker.Visible = true;
             }
         }       
 
@@ -59,22 +63,22 @@ namespace BDArm
             if (insOrUpd == InsOrUpd.InsMaker)
             {
                 InsertContext insertContext = new InsertContext(new InsertContentMaker());
-                insertContext.VisionLogic(EditTextBox.Text);
+                insertContext.VisionLogic(EditTextBox.Text, InsertDateTimePicker.Value.ToShortDateString());
             }
             else if (insOrUpd == InsOrUpd.InsPromo)
             {
                 InsertContext insertContext = new InsertContext(new InsertPromo());
-                insertContext.VisionLogic(EditTextBox.Text);
+                insertContext.VisionLogic(EditTextBox.Text, InsertDateTimePicker.Value.ToShortDateString());
             }
             else if (insOrUpd == InsOrUpd.UpdMaker)
             {
                 UpdateContext updateContext = new UpdateContext(new UpdateContentMaker());
-                updateContext.VisionLogic(strOld, EditTextBox.Text);
+                updateContext.VisionLogic(strOld, EditTextBox.Text, InsertDateTimePicker.Value.ToShortDateString());
             }
             else if (insOrUpd == InsOrUpd.UpdPromo)
             {
                 UpdateContext updateContext = new UpdateContext(new UpdatePromoContent());
-                updateContext.VisionLogic(strOld, EditTextBox.Text);
+                updateContext.VisionLogic(strOld, EditTextBox.Text, InsertDateTimePicker.Value.ToShortDateString());
             }
 
             DialogResult = DialogResult.OK;

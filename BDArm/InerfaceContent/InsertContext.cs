@@ -22,10 +22,10 @@ namespace BDArm.InerfaceContent
         {
             this.insertStrategy = insertStrategy;
         }
-
-        public void VisionLogic(string str)
+        
+        public void VisionLogic(string str,string date)
         {
-            this.insertStrategy.InsertContent(str);
+            this.insertStrategy.InsertContent(str, date);
         }
     }
 
@@ -45,9 +45,9 @@ namespace BDArm.InerfaceContent
             this.updateStrategy = updateStrategy;
         }
 
-        public void VisionLogic(string strOld,string strNew)
+        public void VisionLogic(string strOld,string strNew,string date)
         {
-            this.updateStrategy.UpdateMakerContent(strOld, strNew);
+            this.updateStrategy.UpdateMakerContent(strOld, strNew, date);
         }
     }
 }

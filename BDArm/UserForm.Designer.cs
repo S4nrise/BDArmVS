@@ -35,8 +35,9 @@
             this.LogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.LogoutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.HelloLabel = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.ActivatePCodeTextBox = new System.Windows.Forms.TextBox();
+            this.ActivatePCodeButton = new System.Windows.Forms.Button();
+            this.StatusPCodeLabel = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -77,13 +78,13 @@
             // LogToolStripMenuItem
             // 
             this.LogToolStripMenuItem.Name = "LogToolStripMenuItem";
-            this.LogToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.LogToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
             this.LogToolStripMenuItem.Text = "Подключиться";
             // 
             // LogoutToolStripMenuItem
             // 
             this.LogoutToolStripMenuItem.Name = "LogoutToolStripMenuItem";
-            this.LogoutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.LogoutToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
             this.LogoutToolStripMenuItem.Text = "Выйти из профиля";
             this.LogoutToolStripMenuItem.Click += new System.EventHandler(this.LogoutToolStripMenuItem_Click);
             // 
@@ -97,31 +98,43 @@
             this.HelloLabel.TabIndex = 9;
             this.HelloLabel.Text = "Привет";
             // 
-            // textBox1
+            // ActivatePCodeTextBox
             // 
-            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 38.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox1.Location = new System.Drawing.Point(207, 107);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(382, 65);
-            this.textBox1.TabIndex = 10;
+            this.ActivatePCodeTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 38.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.ActivatePCodeTextBox.Location = new System.Drawing.Point(207, 107);
+            this.ActivatePCodeTextBox.Name = "ActivatePCodeTextBox";
+            this.ActivatePCodeTextBox.Size = new System.Drawing.Size(382, 65);
+            this.ActivatePCodeTextBox.TabIndex = 10;
             // 
-            // button1
+            // ActivatePCodeButton
             // 
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 18.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button1.Location = new System.Drawing.Point(595, 106);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(193, 66);
-            this.button1.TabIndex = 11;
-            this.button1.Text = "Активировать!";
-            this.button1.UseVisualStyleBackColor = true;
+            this.ActivatePCodeButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 18.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.ActivatePCodeButton.Location = new System.Drawing.Point(595, 106);
+            this.ActivatePCodeButton.Name = "ActivatePCodeButton";
+            this.ActivatePCodeButton.Size = new System.Drawing.Size(193, 66);
+            this.ActivatePCodeButton.TabIndex = 11;
+            this.ActivatePCodeButton.Text = "Активировать!";
+            this.ActivatePCodeButton.UseVisualStyleBackColor = true;
+            this.ActivatePCodeButton.Click += new System.EventHandler(this.ActivatePCodeButton_Click);
+            // 
+            // StatusPCodeLabel
+            // 
+            this.StatusPCodeLabel.AutoSize = true;
+            this.StatusPCodeLabel.Location = new System.Drawing.Point(404, 191);
+            this.StatusPCodeLabel.Name = "StatusPCodeLabel";
+            this.StatusPCodeLabel.Size = new System.Drawing.Size(90, 13);
+            this.StatusPCodeLabel.TabIndex = 12;
+            this.StatusPCodeLabel.Text = "Есть промокод?";
+            this.StatusPCodeLabel.Visible = false;
             // 
             // UserForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 219);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.StatusPCodeLabel);
+            this.Controls.Add(this.ActivatePCodeButton);
+            this.Controls.Add(this.ActivatePCodeTextBox);
             this.Controls.Add(this.HelloLabel);
             this.Controls.Add(this.ChekStatusLabel);
             this.Controls.Add(this.MainMonthCalendar);
@@ -146,7 +159,8 @@
         private System.Windows.Forms.ToolStripMenuItem LogToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem LogoutToolStripMenuItem;
         private System.Windows.Forms.Label HelloLabel;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TextBox ActivatePCodeTextBox;
+        private System.Windows.Forms.Button ActivatePCodeButton;
+        private System.Windows.Forms.Label StatusPCodeLabel;
     }
 }
