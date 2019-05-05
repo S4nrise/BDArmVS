@@ -49,6 +49,8 @@
             this.DelButton = new System.Windows.Forms.Button();
             this.AddButton = new System.Windows.Forms.Button();
             this.ChangeButton = new System.Windows.Forms.Button();
+            this.AddProductButton = new System.Windows.Forms.Button();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.MainChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.MainGridView)).BeginInit();
             this.menuStrip1.SuspendLayout();
@@ -56,6 +58,7 @@
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.UserGridView)).BeginInit();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // MainMonthCalendar
@@ -133,6 +136,7 @@
             this.MainTabControl.Size = new System.Drawing.Size(594, 520);
             this.MainTabControl.TabIndex = 4;
             this.MainTabControl.Visible = false;
+            this.MainTabControl.SelectedIndexChanged += new System.EventHandler(this.MainTabControl_SelectedIndexChanged);
             // 
             // tabPage1
             // 
@@ -211,7 +215,7 @@
             // DelButton
             // 
             this.DelButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.DelButton.Location = new System.Drawing.Point(18, 303);
+            this.DelButton.Location = new System.Drawing.Point(0, 117);
             this.DelButton.Name = "DelButton";
             this.DelButton.Size = new System.Drawing.Size(164, 35);
             this.DelButton.TabIndex = 11;
@@ -223,7 +227,7 @@
             // AddButton
             // 
             this.AddButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.AddButton.Location = new System.Drawing.Point(18, 262);
+            this.AddButton.Location = new System.Drawing.Point(0, 76);
             this.AddButton.Name = "AddButton";
             this.AddButton.Size = new System.Drawing.Size(164, 35);
             this.AddButton.TabIndex = 10;
@@ -235,7 +239,7 @@
             // ChangeButton
             // 
             this.ChangeButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.ChangeButton.Location = new System.Drawing.Point(18, 221);
+            this.ChangeButton.Location = new System.Drawing.Point(0, 35);
             this.ChangeButton.Name = "ChangeButton";
             this.ChangeButton.Size = new System.Drawing.Size(164, 35);
             this.ChangeButton.TabIndex = 9;
@@ -244,14 +248,37 @@
             this.ChangeButton.Visible = false;
             this.ChangeButton.Click += new System.EventHandler(this.ChangeButton_Click);
             // 
+            // AddProductButton
+            // 
+            this.AddProductButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.AddProductButton.Location = new System.Drawing.Point(18, 221);
+            this.AddProductButton.Name = "AddProductButton";
+            this.AddProductButton.Size = new System.Drawing.Size(164, 46);
+            this.AddProductButton.TabIndex = 12;
+            this.AddProductButton.Text = "Добавить новый товар";
+            this.AddProductButton.UseVisualStyleBackColor = true;
+            this.AddProductButton.Visible = false;
+            this.AddProductButton.Click += new System.EventHandler(this.AddProductButton_Click);
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.ChangeButton);
+            this.groupBox1.Controls.Add(this.AddButton);
+            this.groupBox1.Controls.Add(this.DelButton);
+            this.groupBox1.Location = new System.Drawing.Point(18, 287);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(164, 161);
+            this.groupBox1.TabIndex = 13;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Элементы управления записями в таблице";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 579);
-            this.Controls.Add(this.DelButton);
-            this.Controls.Add(this.AddButton);
-            this.Controls.Add(this.ChangeButton);
+            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.AddProductButton);
             this.Controls.Add(this.TempLabel);
             this.Controls.Add(this.ChekStatusLabel);
             this.Controls.Add(this.MainMonthCalendar);
@@ -269,6 +296,7 @@
             this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.UserGridView)).EndInit();
+            this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -294,6 +322,8 @@
         private System.Windows.Forms.DataGridView UserGridView;
         private System.Windows.Forms.Button ViewMakerButton;
         private System.Windows.Forms.Button PCodeButton;
+        private System.Windows.Forms.Button AddProductButton;
+        private System.Windows.Forms.GroupBox groupBox1;
     }
 }
 

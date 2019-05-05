@@ -146,7 +146,7 @@ namespace BDArm
 
                     sqlCommand.Dispose();
                     conn.Close();
-                    MessageBox.Show("Вход успешно выполнен");
+                    //MessageBox.Show("Вход успешно выполнен");
                 }
             }
             else

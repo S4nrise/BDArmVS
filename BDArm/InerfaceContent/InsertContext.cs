@@ -50,4 +50,21 @@ namespace BDArm.InerfaceContent
             this.updateStrategy.UpdateMakerContent(strOld, strNew, date);
         }
     }
+
+    class AddProduct
+    {
+        private InterfaceAddProduct addProduct;
+
+        public AddProduct() { }
+
+        public AddProduct(InterfaceAddProduct addProduct)
+        {
+            this.addProduct = addProduct;
+        }
+
+        public void VisionLogic()
+        {
+            this.addProduct.AddProduct();
+        }
+    }
 }

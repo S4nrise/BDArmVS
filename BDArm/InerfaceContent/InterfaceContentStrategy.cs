@@ -15,4 +15,9 @@ namespace BDArm.InerfaceContent
     {
         void UpdateMakerContent(string strOld,string strNew, string date);
     }
+
+    public interface InterfaceAddProduct
+    {
+        void AddProduct();
+    }
 }

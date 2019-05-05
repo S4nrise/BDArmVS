@@ -184,4 +184,13 @@ namespace BDArm.InerfaceContent
             }
         }
     }
+
+    class AddNewProduct : InterfaceAddProduct
+    {
+        public void AddProduct()
+        {
+
+            throw new NotImplementedException();
+        }
+    }
 }

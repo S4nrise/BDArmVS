@@ -74,10 +74,12 @@ namespace BDArm
             ChekStatusLabel.Text = "Статус: Подключено";
             MainTabControl.Visible = true;
             ChangeButton.Visible = true;
+            AddButton.Text = "Обновить";
             AddButton.Visible = true;
             DelButton.Visible = true;
+            AddProductButton.Visible = true;
 
-            GridUpdate();
+            MainGridUpdate();
             /*string mainStr = "select * from maker";
             GridUpdate(0,mainStr);
             mainStr = "select id,login,isadmin from users";
@@ -96,10 +98,11 @@ namespace BDArm
             ChangeButton.Visible = false;
             AddButton.Visible = false;
             DelButton.Visible = false;
+            AddProductButton.Visible = false;
         }
 
         //Обновление для grid
-        public void GridUpdate()
+        public void MainGridUpdate()
         {           
             var sqlCommand = new NpgsqlCommand { };
 
@@ -107,9 +110,9 @@ namespace BDArm
             {
                 DataSet dataSet;
                 NpgsqlDataAdapter dataAdapter;
-                string command = @"select product.id as ""ID"",product.makerID as ""Производитель"",product.modelID as ""Модель"",
-                                    product.category as ""Категория"",product.sales as ""Колличество проданых едениц"",
-                                    product.price as ""Цена"",product.pcount as ""Всего едениц"" from product
+                string command = @"select product.id as ""ID"",maker.mname as ""Производитель"",model.name as ""Модель"",
+                                    category.name as ""Категория"",product.sales as ""Колличество проданых едениц"",
+                                    product.price as ""Цена (RUB)"",product.pcount as ""Всего едениц"" from product
                                     join maker on maker.id = product.makerID
                                     join model on model.id = product.modelID
                                     join category on category.id = product.category";
@@ -130,24 +133,47 @@ namespace BDArm
         }
 
         //Удалить
-        public string command = "",DBCommand= "";
-        public int selector;
         private void DelButton_Click(object sender, EventArgs e)
         {
+            string DBCommand = "";
             var grid = new DataGridView();
-            //DBCommand - в какой таблице что удалить
-            if (gridType == GridType.Maker)
+            //Удаление в главной вкладке
+            if (MainTabControl.SelectedIndex == 0)
             {
-                DBCommand = @"delete from maker where name = @currentName";
-                Del(DBCommand);
-                ShowMaker();
+                DBCommand = @"delete from product where id = @currentName";
+                using (NpgsqlConnection conn = new NpgsqlConnection(ConnString))
+                {
+                    conn.Open();
+                    var sqlCommand = new NpgsqlCommand { };
+                    sqlCommand = new NpgsqlCommand
+                    {
+                        Connection = conn,
+                        CommandText = DBCommand
+                    };
+                    //MessageBox.Show(UserGridView.SelectedCells[1].ToString());
+                    sqlCommand.Parameters.AddWithValue("@currentName", MainGridView.SelectedCells[0].Value);
+                    sqlCommand.ExecuteNonQuery();
+                    conn.Close();
+                }
+                MainGridUpdate();
             }
-            else if (gridType == GridType.Promo)
+            //Удаление во вкладке со справочниками
+            else if (MainTabControl.SelectedIndex == 1)
             {
-                grid = UserGridView;
-                DBCommand = @"delete from promo where code = @currentName";
-                Del(DBCommand);
-                ShowPCode();
+                //DBCommand - в какой таблице что удалить
+                if (gridType == GridType.Maker)
+                {
+                    DBCommand = @"delete from maker where name = @currentName";
+                    Del(DBCommand);
+                    ShowMaker();
+                }
+                else if (gridType == GridType.Promo)
+                {
+                    grid = UserGridView;
+                    DBCommand = @"delete from promo where code = @currentName";
+                    Del(DBCommand);
+                    ShowPCode();
+                }
             }
         }
         
@@ -176,8 +202,11 @@ namespace BDArm
         //Добавить
         private void AddButton_Click(object sender, EventArgs e)
         {
-            //MessageBox.Show(MainTabControl.SelectedIndex.ToString());
-            if(MainTabControl.SelectedIndex==1)
+            if (MainTabControl.SelectedIndex == 0)
+            {
+                MainGridUpdate();
+            }
+            else if (MainTabControl.SelectedIndex == 1)
             {
                 if (gridType==GridType.Maker)
                 {
@@ -194,12 +223,18 @@ namespace BDArm
             }
         }
 
-        public string str;
         //Загрузка производителей по кнопке
         private void ViewMakerButton_Click(object sender, EventArgs e)
         {
-            tabPage2.Text = "Производители";
+            tabPage2.Text = "Таблица: Производители";
             ShowMaker();
+        }
+
+        //Загрузка промокодов по кнопке
+        private void PCodeButton_Click(object sender, EventArgs e)
+        {
+            tabPage2.Text = "Таблица: Промокоды";
+            ShowPCode();
         }
 
         //Метод загрузки производителей 
@@ -218,17 +253,24 @@ namespace BDArm
             context.VisionLogic(UserGridView);
         }
 
-        //Загрузка промокодов по кнопке
-        private void PCodeButton_Click(object sender, EventArgs e)
+        //Кнопка добавить новый товар
+        private void AddProductButton_Click(object sender, EventArgs e)
         {
-            tabPage2.Text = "Промокоды";
-            ShowPCode();
+            ProductForm productForm = new ProductForm();
+            if (productForm.ShowDialog() == DialogResult.OK)
+            {
+                MainGridUpdate();
+            }
         }
 
         //Изменить
         private void ChangeButton_Click(object sender, EventArgs e)
         {
-            if (MainTabControl.SelectedIndex == 1)
+            if(MainTabControl.SelectedIndex == 0)
+            {
+                MainGridUpdate();
+            }
+            else if (MainTabControl.SelectedIndex == 1)
             {
                 //??Подуумать как заносить старую дату в календарь
                 if (gridType == GridType.Maker)
@@ -243,6 +285,18 @@ namespace BDArm
                     addForm.ShowDialog();
                     ShowPCode();
                 }
+            }
+        }
+
+        private void MainTabControl_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (MainTabControl.SelectedIndex == 0)
+            {
+                AddButton.Text = "Обновить";
+            }
+            else
+            {
+                AddButton.Text = "Добавить";
             }
         }
     }
