@@ -51,6 +51,7 @@
             this.ChangeButton = new System.Windows.Forms.Button();
             this.AddProductButton = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.ModelButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.MainChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.MainGridView)).BeginInit();
             this.menuStrip1.SuspendLayout();
@@ -152,6 +153,7 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.ModelButton);
             this.tabPage2.Controls.Add(this.PCodeButton);
             this.tabPage2.Controls.Add(this.ViewMakerButton);
             this.tabPage2.Controls.Add(this.UserGridView);
@@ -165,7 +167,7 @@
             // 
             // PCodeButton
             // 
-            this.PCodeButton.Location = new System.Drawing.Point(140, 440);
+            this.PCodeButton.Location = new System.Drawing.Point(262, 440);
             this.PCodeButton.Name = "PCodeButton";
             this.PCodeButton.Size = new System.Drawing.Size(116, 33);
             this.PCodeButton.TabIndex = 2;
@@ -272,6 +274,16 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Элементы управления записями в таблице";
             // 
+            // ModelButton
+            // 
+            this.ModelButton.Location = new System.Drawing.Point(140, 440);
+            this.ModelButton.Name = "ModelButton";
+            this.ModelButton.Size = new System.Drawing.Size(116, 33);
+            this.ModelButton.TabIndex = 3;
+            this.ModelButton.Text = "Модели";
+            this.ModelButton.UseVisualStyleBackColor = true;
+            this.ModelButton.Click += new System.EventHandler(this.ModelButton_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -324,6 +336,7 @@
         private System.Windows.Forms.Button PCodeButton;
         private System.Windows.Forms.Button AddProductButton;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Button ModelButton;
     }
 }
 

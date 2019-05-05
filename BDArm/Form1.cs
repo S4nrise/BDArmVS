@@ -19,6 +19,7 @@ namespace BDArm
         public enum GridType
         {
             Maker,
+            Model,
             Promo
         };
         GridType gridType;
@@ -230,6 +231,13 @@ namespace BDArm
             ShowMaker();
         }
 
+        //Загрузка моделей по кнопке
+        private void ModelButton_Click(object sender, EventArgs e)
+        {
+            tabPage2.Text = "Таблица: Модели";
+            ShowModel();
+        }
+
         //Загрузка промокодов по кнопке
         private void PCodeButton_Click(object sender, EventArgs e)
         {
@@ -242,6 +250,14 @@ namespace BDArm
         {
             gridType = GridType.Maker;
             Context context = new Context(new ShowMaker());
+            context.VisionLogic(UserGridView);
+        }
+
+        //Метод загрузки промокодов
+        public void ShowModel()
+        {
+            gridType = GridType.Model;
+            Context context = new Context(new ShowModel());
             context.VisionLogic(UserGridView);
         }
 
