@@ -19,7 +19,9 @@ namespace BDArm
             InsMaker,
             UpdMaker,
             InsPromo,
-            UpdPromo
+            UpdPromo,
+            InsModel,
+            UpdModel
         }
 
         public InsOrUpd insOrUpd;
@@ -56,6 +58,12 @@ namespace BDArm
                 strOld = str;
                 InsertDateTimePicker.Visible = true;
             }
+            else if (insOrUpd == InsOrUpd.InsModel)
+            {
+                CompleteButton.Text = "Добавить модель";
+                this.insOrUpd = InsOrUpd.InsModel;
+                InsertDateTimePicker.Visible = false;
+            }
         }       
 
         private void CompleteButton_Click(object sender, EventArgs e)
@@ -68,6 +76,11 @@ namespace BDArm
             else if (insOrUpd == InsOrUpd.InsPromo)
             {
                 InsertContext insertContext = new InsertContext(new InsertPromo());
+                insertContext.VisionLogic(EditTextBox.Text, InsertDateTimePicker.Value.ToShortDateString());
+            }
+            else if (insOrUpd == InsOrUpd.InsModel)
+            {
+                InsertContext insertContext = new InsertContext(new InsertModel());
                 insertContext.VisionLogic(EditTextBox.Text, InsertDateTimePicker.Value.ToShortDateString());
             }
             else if (insOrUpd == InsOrUpd.UpdMaker)

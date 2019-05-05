@@ -221,6 +221,12 @@ namespace BDArm
                     addForm.ShowDialog();
                     ShowPCode();
                 }
+                else if (gridType == GridType.Model)
+                {
+                    AddForm addForm = new AddForm(AddForm.InsOrUpd.InsModel, "", "");
+                    addForm.ShowDialog();
+                    ShowModel();
+                }
             }
         }
 
@@ -300,6 +306,12 @@ namespace BDArm
                     AddForm addForm = new AddForm(AddForm.InsOrUpd.UpdPromo, UserGridView.SelectedCells[1].Value.ToString(),"");
                     addForm.ShowDialog();
                     ShowPCode();
+                }
+                else if (gridType == GridType.Model)
+                {
+                    AddForm addForm = new AddForm(AddForm.InsOrUpd.UpdModel, UserGridView.SelectedCells[1].Value.ToString(), "");
+                    addForm.ShowDialog();
+                    ShowModel();
                 }
             }
         }

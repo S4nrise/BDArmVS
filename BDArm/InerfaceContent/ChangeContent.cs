@@ -99,6 +99,51 @@ namespace BDArm.InerfaceContent
         }
     }
 
+    class InsertModel : InterfaceContentStrategy
+    {
+        public void InsertContent(string str, string date)
+        {
+            var sqlCommand = new NpgsqlCommand();
+            using (NpgsqlConnection conn = new NpgsqlConnection(MainForm.ConnString))
+            {
+
+                //Проверка на уникльность наименования
+                sqlCommand = new NpgsqlCommand
+                {
+                    Connection = conn,
+                    CommandText = @"select count(*) from promo where code = @currentName"
+                };
+                sqlCommand.Parameters.AddWithValue("@currentName", str);
+
+                conn.Open();
+                if ((long)sqlCommand.ExecuteScalar() != 0)
+                {
+                    MessageBox.Show("Такая модель уже есть.");
+                }
+                else
+                {
+                    //Меняем имя
+                    sqlCommand = new NpgsqlCommand
+                    {
+                        Connection = conn,
+                        CommandText = @"insert into model values ((select max(id)+1 from promo), @newName)"
+                    };
+                    sqlCommand.Parameters.AddWithValue("@newName", str);
+                }
+                try
+                {
+                    sqlCommand.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                    MessageBox.Show(ex.StackTrace);
+                }
+                conn.Close();
+            }
+        }
+    }
+
     class UpdateContentMaker : InterfaceUpdateContent
     {
         public void UpdateMakerContent(string strOld,string strNew, string date)
